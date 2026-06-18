@@ -147,7 +147,7 @@
                                         <option value="是 (新進/調任)">是 (本學年度新進教師或他校調任)</option>
                                     </select>
                                 </div>
-                                <div>
+                                <div id="teacher-id-container">
                                     <label class="block text-sm font-medium text-slate-600 mb-1">
                                         身分識別碼 (身分證後四碼) <span id="id-required-asterisk" class="text-red-500 hidden">*</span>
                                     </label>
@@ -213,7 +213,7 @@
                                     </div>
                                 </div>
 
-                                <!-- A4 (原A5調整為網路狀況除錯指標) -->
+                                <!-- A4 (網路狀況除錯指標) -->
                                 <div class="p-4 rounded-xl bg-slate-50 hover:bg-slate-100/50 transition duration-150">
                                     <div class="flex flex-col md:flex-row md:items-start justify-between gap-3 mb-2">
                                         <div class="space-y-1 text-left">
@@ -225,7 +225,7 @@
                                     </div>
                                 </div>
 
-                                <!-- A5 (原A6調整) -->
+                                <!-- A5 -->
                                 <div class="p-4 rounded-xl bg-slate-50 hover:bg-slate-100/50 transition duration-150">
                                     <div class="flex flex-col md:flex-row md:items-start justify-between gap-3 mb-2">
                                         <div class="space-y-1 text-left">
@@ -462,7 +462,7 @@
                                         <div class="space-y-1 text-left">
                                             <span class="text-xs font-bold text-rose-600 bg-rose-50 px-2 py-0.5 rounded">D2</span>
                                             <h3 class="text-sm font-bold text-slate-800">AI 學習夥伴與課堂自學引導</h3>
-                                            <p class="text-xs text-slate-500">能引導學生運用生成式 AI 對話工具 (如 e度、各平台 AI 助教) 進行 1:1 人機互動探究，透過提問與對話澄清個人學習疑惑，落實自主學習。</p>
+                                            <p class="text-xs text-slate-500">能引導學生運用生成式 AI 對話工具 (如 e度、各平台 AI 助教) 進行互動探究，透過提問與對話澄清個人學習疑惑，落實自主學習。</p>
                                         </div>
                                         <div class="flex flex-wrap gap-1 md:gap-1.5 self-start md:self-center shrink-0" data-score-group="D2"></div>
                                     </div>
@@ -579,8 +579,8 @@
                                         <span class="bg-amber-50 text-amber-700 border border-amber-200 text-[10px] font-bold px-2 py-0.5 rounded">對應維度 C 縣購軟體</span>
                                         <span class="text-[10px] text-slate-400 font-mono">課程代碼：4890253</span>
                                     </div>
-                                    <h4 class="text-sm font-bold text-slate-800">雲林縣購 SmartLumio 與酷AI 課堂深度融合應用班</h4>
-                                    <p class="text-xs text-slate-500 leading-relaxed">手把手操作 LoiloNote、SmartLumio 與雲林最新「酷AI」平台的指派任務、課堂即時反饋、適性診斷與學力分析實戰。</p>
+                                    <h4 class="text-sm font-bold text-slate-800">雲林縣購 SmartLumio、Padlet 與 LoiloNote 課堂整合應用班</h4>
+                                    <p class="text-xs text-slate-500 leading-relaxed">手把手掌握 Padlet、LoiloNote 與 SmartLumio 在大屏與小屏協作上的精準教學，包含卡片指派、線上白板多向互動實踐。</p>
                                 </div>
                                 <div class="pt-3 flex justify-between items-center border-t border-slate-50 mt-3">
                                     <span class="text-[11px] text-amber-600 font-bold">115學年度熱烈招生中</span>
@@ -686,7 +686,7 @@
 
                             <!-- 綜合評語AI輔助引導 -->
                             <div class="mt-6 pt-4 border-t border-slate-700/80 space-y-2">
-                                <h4 class="text-xs font-bold text-slate-300"><i class="fa-solid fa-magic-wand-sparkles text-teal-400 mr-1"></i>系統自動 analysis 提示：</h4>
+                                <h4 class="text-xs font-bold text-slate-300"><i class="fa-solid fa-magic-wand-sparkles text-teal-400 mr-1"></i>系統自動分析提示：</h4>
                                 <p id="ai-tip" class="text-[11px] text-slate-400 leading-relaxed italic">「請選擇學校並開始評分。填寫完畢後，系統會自動產出數位精進建議。」</p>
                             </div>
                         </div>
@@ -1154,7 +1154,7 @@
         let firebaseUnsubscribe = null;
         let appId = 'yunlin-digital-eval';
 
-        // 📢 A4 移除後，維度 A 改為 5 項指標：A1, A2, A3, A4, A5
+        // A4 移除後，維度 A 改為 5 項指標：A1, A2, A3, A4, A5
         const metrics = {
             A: ['A1', 'A2', 'A3', 'A4', 'A5'],
             B: ['B1', 'B2', 'B3', 'B4', 'B5'],
@@ -1202,7 +1202,8 @@
             if (loginSchoolSelect) loginSchoolSelect.innerHTML = dropdownHtml;
         }
 
-        window.toggleLoginFields = function() {
+        // 修改為標準 local 函式以防 module Scope 呼叫失敗
+        function toggleLoginFields() {
             const role = document.getElementById('login-role').value;
             const schoolField = document.getElementById('login-school-field');
             const pwdHint = document.getElementById('login-pwd-hint');
@@ -1214,24 +1215,27 @@
                 schoolField.classList.add('hidden');
                 pwdHint.innerText = "※ 請輸入縣市總管理者通行密碼（056341014）。";
             }
-        };
+        }
 
-        // 📢 升級：教師自評表時必填身分識別碼 (動態防呆)
-        window.toggleTeacherIdRequired = function() {
+        // 📢 升級：教師自評表時必填身分識別碼與隱藏控制
+        function toggleTeacherIdRequired() {
             const evalType = document.querySelector('select[name="evalType"]').value;
             const idInput = document.getElementById('teacherIdLast4-input');
             const asterisk = document.getElementById('id-required-asterisk');
+            const container = document.getElementById('teacher-id-container');
             
             if (evalType === '教師自我評量') {
                 idInput.required = true;
                 idInput.placeholder = "自評必填 (請輸入 4 位數字)";
                 if (asterisk) asterisk.classList.remove('hidden');
+                if (container) container.classList.remove('hidden');
             } else {
                 idInput.required = false;
                 idInput.placeholder = "請輸入 4 位數字 (選填)";
                 if (asterisk) asterisk.classList.add('hidden');
+                if (container) container.classList.add('hidden');
             }
-        };
+        }
 
         function initScoreButtons() {
             const allGroups = [...metrics.A, ...metrics.B, ...metrics.C, ...metrics.D];
@@ -2196,6 +2200,7 @@
 
         // 綁定全域函式確保在 HTML 內 onclick 可以正常呼叫
         window.toggleTeacherIdRequired = toggleTeacherIdRequired;
+        window.toggleLoginFields = toggleLoginFields;
         window.verifyAdminPassword = verifyAdminPassword;
     </script>
 
