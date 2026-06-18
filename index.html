@@ -109,7 +109,7 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-sm font-medium text-slate-600 mb-1">評估類型 <span class="text-red-500">*</span></label>
-                                    <select name="evalType" required class="w-full px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-yunlin-500 text-sm">
+                                    <select name="evalType" required onchange="toggleTeacherIdRequired()" class="w-full px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-yunlin-500 text-sm">
                                         <option value="教師自我評量">□ 教師自我評量</option>
                                         <option value="同儕互相評分">□ 同儕互相評分</option>
                                         <option value="主管觀課評估">□ 校長/主任觀課評估</option>
@@ -148,12 +148,10 @@
                                     </select>
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-slate-600 mb-1">身分識別碼 (身分證後四碼) <span class="text-red-500">*</span></label>
-                                    <input type="text" name="teacherIdLast4" required maxlength="4" pattern="[0-9]{4}" placeholder="請輸入 4 位數字，用於跨校異動比對" class="w-full px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-yunlin-500 text-sm">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-slate-600 mb-1">教師聯絡電話/手機 <span class="text-red-500">*</span></label>
-                                    <input type="tel" name="contactPhone" required placeholder="如：0912345678" class="w-full px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-yunlin-500 text-sm">
+                                    <label class="block text-sm font-medium text-slate-600 mb-1">
+                                        身分識別碼 (身分證後四碼) <span id="id-required-asterisk" class="text-red-500 hidden">*</span>
+                                    </label>
+                                    <input type="text" id="teacherIdLast4-input" name="teacherIdLast4" maxlength="4" pattern="[0-9]{4}" placeholder="自評時必填 (4 位數字，用於跨校比對)" class="w-full px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-yunlin-500 text-sm">
                                 </div>
 
                                 <div>
@@ -174,9 +172,9 @@
                                     <span class="bg-teal-50 text-teal-600 w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm">A</span>
                                     大屏系統技術操作與管理能力
                                 </h2>
-                                <span class="text-xs text-slate-400">Apple TV / AVACAST / IMDS</span>
+                                <span class="text-xs text-slate-400">Apple TV / AVACAST / 網路連線診斷</span>
                             </div>
-                            <p class="text-xs text-slate-500 mb-4 italic">評估教師對於教室「智慧黑板」硬體系統、無線投影設備及安全管理的基礎與進階操作熟悉度。</p>
+                            <p class="text-xs text-slate-500 mb-4 italic">評估教師對於教室「智慧黑板」硬體系統、無線投影設備及網路故障排除的基礎與進階操作熟悉度。</p>
                             
                             <div class="space-y-6">
                                 <!-- A1 -->
@@ -215,39 +213,27 @@
                                     </div>
                                 </div>
 
-                                <!-- A4 -->
+                                <!-- A4 (原A5調整為網路狀況除錯指標) -->
                                 <div class="p-4 rounded-xl bg-slate-50 hover:bg-slate-100/50 transition duration-150">
                                     <div class="flex flex-col md:flex-row md:items-start justify-between gap-3 mb-2">
                                         <div class="space-y-1 text-left">
                                             <span class="text-xs font-bold text-yunlin-600 bg-yunlin-50 px-2 py-0.5 rounded">A4</span>
-                                            <h3 class="text-sm font-bold text-slate-800">中央管理系統 (IMDS) 基本認知</h3>
-                                            <p class="text-xs text-slate-500">理解 IMDS 後台（最高管理者、站點管理員、一般用戶）權限，並能正確登入及操作分配之大屏功能。</p>
+                                            <h3 class="text-sm font-bold text-slate-800">網路狀態檢測與大屏連線除錯</h3>
+                                            <p class="text-xs text-slate-500">當大屏或iPad連線異常時，能主動檢測網路連線狀況（如檢查 Wi-Fi 訊號、取得之 IP 網段及網速），進行基礎障礙排除，或執行報修流程。</p>
                                         </div>
                                         <div class="flex flex-wrap gap-1 md:gap-1.5 self-start md:self-center shrink-0" data-score-group="A4"></div>
                                     </div>
                                 </div>
 
-                                <!-- A5 -->
+                                <!-- A5 (原A6調整) -->
                                 <div class="p-4 rounded-xl bg-slate-50 hover:bg-slate-100/50 transition duration-150">
                                     <div class="flex flex-col md:flex-row md:items-start justify-between gap-3 mb-2">
                                         <div class="space-y-1 text-left">
                                             <span class="text-xs font-bold text-yunlin-600 bg-yunlin-50 px-2 py-0.5 rounded">A5</span>
-                                            <h3 class="text-sm font-bold text-slate-800">基礎除錯與脫管重新綁定</h3>
-                                            <p class="text-xs text-slate-500">大屏離線或脫管時，能操作大屏端掃描 QRcode 或輸入代碼重新綁定，或進行標準報修流程。</p>
-                                        </div>
-                                        <div class="flex flex-wrap gap-1 md:gap-1.5 self-start md:self-center shrink-0" data-score-group="A5"></div>
-                                    </div>
-                                </div>
-
-                                <!-- A6 (修正 A6 描述) -->
-                                <div class="p-4 rounded-xl bg-slate-50 hover:bg-slate-100/50 transition duration-150">
-                                    <div class="flex flex-col md:flex-row md:items-start justify-between gap-3 mb-2">
-                                        <div class="space-y-1 text-left">
-                                            <span class="text-xs font-bold text-yunlin-600 bg-yunlin-50 px-2 py-0.5 rounded">A6</span>
                                             <h3 class="text-sm font-bold text-slate-800">訊號源切換與大屏系統整合能力</h3>
                                             <p class="text-xs text-slate-500">熟練掌握在「大屏 Android 內建系統」與「外部 Apple TV」等不同訊號來源間的切換，維持高效率課堂。</p>
                                         </div>
-                                        <div class="flex flex-wrap gap-1 md:gap-1.5 self-start md:self-center shrink-0" data-score-group="A6"></div>
+                                        <div class="flex flex-wrap gap-1 md:gap-1.5 self-start md:self-center shrink-0" data-score-group="A5"></div>
                                     </div>
                                 </div>
                             </div>
@@ -295,7 +281,7 @@
                                         <div class="space-y-1 text-left">
                                             <span class="text-xs font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded">B3</span>
                                             <h3 class="text-sm font-bold text-slate-800">小組角色分配與共同解題</h3>
-                                            <p class="text-xs text-slate-500">能引導學生在小組內分配角色，利用平板共同解題。</p>
+                                            <p class="text-xs text-slate-500">能引難學生在小組內分配角色，利用平板共同解題。</p>
                                         </div>
                                         <div class="flex flex-wrap gap-1 md:gap-1.5 self-start md:self-center shrink-0" data-score-group="B3"></div>
                                     </div>
@@ -347,7 +333,7 @@
                                                 <h3 class="text-sm font-bold text-slate-800">適性診斷與線上派題能力</h3>
                                                 <p class="text-xs text-slate-500">能運用數位平台之知識節點或題庫，依學生程度指派影片、練習題 or 測驗。</p>
                                             </div>
-                                            <!-- 佐證軟體勾選 -->
+                                            <!-- 佐證軟體勾選 (分開且不重疊) -->
                                             <div class="bg-white p-3 rounded-lg border border-slate-150 space-y-1.5">
                                                 <span class="text-xs font-bold text-slate-400 block text-left"><i class="fa-solid fa-square-check mr-1 text-amber-500"></i>佐證軟體（可複選）</span>
                                                 <div class="flex flex-wrap gap-x-4 gap-y-2 text-xs text-left">
@@ -364,7 +350,7 @@
                                     </div>
                                 </div>
 
-                                <!-- C2 -->
+                                <!-- C2 (加入 SmartLumio) -->
                                 <div class="p-4 rounded-xl bg-slate-50 hover:bg-slate-100/50 transition duration-150">
                                     <div class="flex flex-col md:flex-row md:items-start justify-between gap-4">
                                         <div class="space-y-3 flex-grow">
@@ -379,6 +365,7 @@
                                                 <div class="flex flex-wrap gap-x-4 gap-y-2 text-xs text-left">
                                                     <label class="flex items-center gap-1.5 cursor-pointer text-slate-600 hover:text-slate-900 shrink-0"><input type="checkbox" name="C2_evidence" value="Loilo Note" class="rounded text-amber-500 focus:ring-amber-500">Loilo Note</label>
                                                     <label class="flex items-center gap-1.5 cursor-pointer text-slate-600 hover:text-slate-900 shrink-0"><input type="checkbox" name="C2_evidence" value="Padlet" class="rounded text-amber-500 focus:ring-amber-500">Padlet</label>
+                                                    <label class="flex items-center gap-1.5 cursor-pointer text-slate-600 hover:text-slate-900 shrink-0"><input type="checkbox" name="C2_evidence" value="SmartLumio" class="rounded text-amber-500 focus:ring-amber-500">SmartLumio</label>
                                                     <label class="flex items-center gap-1.5 cursor-pointer text-slate-600 hover:text-slate-900 shrink-0"><input type="checkbox" name="C2_evidence" value="其它" onchange="toggleOtherInput(this, 'C2_other')" class="rounded text-amber-500 focus:ring-amber-500">其它</label>
                                                 </div>
                                                 <input type="text" id="C2_other" placeholder="請輸入其它軟體名稱" class="w-full mt-2 px-2 py-1 text-xs border border-slate-200 rounded hidden">
@@ -388,7 +375,7 @@
                                     </div>
                                 </div>
 
-                                <!-- C3 -->
+                                <!-- C3 (加入 酷AI) -->
                                 <div class="p-4 rounded-xl bg-slate-50 hover:bg-slate-100/50 transition duration-150">
                                     <div class="flex flex-col md:flex-row md:items-start justify-between gap-4">
                                         <div class="space-y-3 flex-grow">
@@ -405,6 +392,7 @@
                                                     <label class="flex items-center gap-1.5 cursor-pointer text-slate-600 hover:text-slate-900 shrink-0"><input type="checkbox" name="C3_evidence" value="Waygoground(原Quizizz)" class="rounded text-amber-500 focus:ring-amber-500">Waygoground(原Quizizz)</label>
                                                     <label class="flex items-center gap-1.5 cursor-pointer text-slate-600 hover:text-slate-900 shrink-0"><input type="checkbox" name="C3_evidence" value="Kahoot" class="rounded text-amber-500 focus:ring-amber-500">Kahoot</label>
                                                     <label class="flex items-center gap-1.5 cursor-pointer text-slate-600 hover:text-slate-900 shrink-0"><input type="checkbox" name="C3_evidence" value="Wordwall" class="rounded text-amber-500 focus:ring-amber-500">Wordwall</label>
+                                                    <label class="flex items-center gap-1.5 cursor-pointer text-slate-600 hover:text-slate-900 shrink-0"><input type="checkbox" name="C3_evidence" value="酷AI" class="rounded text-amber-500 focus:ring-amber-500">酷AI</label>
                                                     <label class="flex items-center gap-1.5 cursor-pointer text-slate-600 hover:text-slate-900 shrink-0"><input type="checkbox" name="C3_evidence" value="其它" onchange="toggleOtherInput(this, 'C3_other')" class="rounded text-amber-500 focus:ring-amber-500">其它</label>
                                                 </div>
                                                 <input type="text" id="C3_other" placeholder="請輸入其它軟體名稱" class="w-full mt-2 px-2 py-1 text-xs border border-slate-200 rounded hidden">
@@ -414,7 +402,7 @@
                                     </div>
                                 </div>
 
-                                <!-- C4 -->
+                                <!-- C4 (加入 酷AI) -->
                                 <div class="p-4 rounded-xl bg-slate-50 hover:bg-slate-100/50 transition duration-150">
                                     <div class="flex flex-col md:flex-row md:items-start justify-between gap-4">
                                         <div class="space-y-3 flex-grow">
@@ -432,6 +420,7 @@
                                                     <label class="flex items-center gap-1.5 cursor-pointer text-slate-600 hover:text-slate-900 shrink-0"><input type="checkbox" name="C4_evidence" value="力宇(AI Leade365)" class="rounded text-amber-500 focus:ring-amber-500">力宇(AI Leade365)</label>
                                                     <label class="flex items-center gap-1.5 cursor-pointer text-slate-600 hover:text-slate-900 shrink-0"><input type="checkbox" name="C4_evidence" value="翰林" class="rounded text-amber-500 focus:ring-amber-500">翰林</label>
                                                     <label class="flex items-center gap-1.5 cursor-pointer text-slate-600 hover:text-slate-900 shrink-0"><input type="checkbox" name="C4_evidence" value="康軒" class="rounded text-amber-500 focus:ring-amber-500">康軒</label>
+                                                    <label class="flex items-center gap-1.5 cursor-pointer text-slate-600 hover:text-slate-900 shrink-0"><input type="checkbox" name="C4_evidence" value="酷AI" class="rounded text-amber-500 focus:ring-amber-500">酷AI</label>
                                                     <label class="flex items-center gap-1.5 cursor-pointer text-slate-600 hover:text-slate-900 shrink-0"><input type="checkbox" name="C4_evidence" value="其它" onchange="toggleOtherInput(this, 'C4_other')" class="rounded text-amber-500 focus:ring-amber-500">其它</label>
                                                 </div>
                                                 <input type="text" id="C4_other" placeholder="請輸入其它軟體名稱" class="w-full mt-2 px-2 py-1 text-xs border border-slate-200 rounded hidden">
@@ -503,23 +492,23 @@
                                 <textarea name="highlights" rows="3" placeholder="例如：能善用 LoiloNote 收集卡片並於大屏流暢發表..." class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-yunlin-500"></textarea>
                             </div>
                             <div class="text-left">
-                                <label class="block text-sm font-medium text-slate-700 mb-1">2. 待優化或需進一步協助之方向：</label>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">🌱 2. 教學共備與自主精進探索契機（溫馨成長建議）：</label>
                                 <textarea name="improvements" rows="3" placeholder="例如：在引導學生與 AI 學習夥伴互動時，可再加強事實查核步驟..." class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-yunlin-500"></textarea>
                             </div>
                             <div class="text-left">
                                 <label class="block text-sm font-semibold text-slate-700 mb-2">3. 校內支持與增能計畫安排 (可多選)：</label>
                                 <div class="space-y-2 text-sm text-slate-600">
                                     <label class="flex items-start gap-2 cursor-pointer">
-                                        <input type="checkbox" name="supportPlan" value="【初階關懷】 安排校內資訊網管老師 or 領航教師進行 Apple TV 投影設定 or 硬體訊號切換手把手指導。" class="mt-0.5 rounded text-yunlin-600 focus:ring-yunlin-500">
-                                        <span><strong>【初階關懷】</strong> 安排校內資訊網管老師 or 領航教師進行 Apple TV 投影設定 or 硬體訊號切換手把手指導。</span>
+                                        <input type="checkbox" name="supportPlan" value="【溫馨陪伴】「課堂技術小幫手」隨行交流：邀請校內夥伴教師或網管老師於空堂進行溫馨交流，輕鬆分享 Apple TV 設定或訊號切換小訣竅。" class="mt-0.5 rounded text-yunlin-600 focus:ring-yunlin-500">
+                                        <span><strong>【溫馨陪伴】</strong>「課堂技術小幫手」隨行交流：邀請校內夥伴教師或網管老師於空堂進行溫馨交流，輕鬆分享 Apple TV 設定或訊號切換小訣竅。</span>
                                     </label>
                                     <label class="flex items-start gap-2 cursor-pointer">
-                                        <input type="checkbox" name="supportPlan" value="【同儕共備】 建議加入校內數位教學領域社群，共同開發雙屏協作教案。" class="mt-0.5 rounded text-yunlin-600 focus:ring-yunlin-500">
-                                        <span><strong>【同儕共備】</strong> 建議加入校內數位教學領域社群，共同開發雙屏協作教案。</span>
+                                        <input type="checkbox" name="supportPlan" value="【同儕共備】共備聊天室與教學共玩：邀請加入校內溫馨的數位學習共備社群，一齊探討與交流雙屏協作的趣味教學點子。" class="mt-0.5 rounded text-yunlin-600 focus:ring-yunlin-500">
+                                        <span><strong>【同儕共備】</strong>共備聊天室與教學共玩：邀請加入校內溫馨的數位學習共備社群，一齊探討與交流雙屏協作的趣味教學點子。</span>
                                     </label>
                                     <label class="flex items-start gap-2 cursor-pointer">
-                                        <input type="checkbox" name="supportPlan" value="【教學推廣】 本教師數位教學與 AI 融入能力優秀，推薦擔任校內數位學習「種子教師」，並安排觀議課分享。" class="mt-0.5 rounded text-yunlin-600 focus:ring-yunlin-500">
-                                        <span><strong>【教學推廣】</strong> 本教師數位教學與 AI 融入能力優秀，推薦擔任校內數位學習「種子教師」，並安排觀議課分享。</span>
+                                        <input type="checkbox" name="supportPlan" value="【經驗共享】種子大師不藏私分享：教師數位教學與 AI 融入成效卓越，鼓勵在輕鬆、自主的氛圍下，與校內同好聊聊心得、共享趣味。" class="mt-0.5 rounded text-yunlin-600 focus:ring-yunlin-500">
+                                        <span><strong>【經驗共享】</strong>種子大師不藏私分享：教師數位教學與 AI 融入成效卓越，鼓勵在輕鬆、自主的氛圍下，與校內同好聊聊心得、共享趣味。</span>
                                     </label>
                                 </div>
                             </div>
@@ -535,6 +524,91 @@
                             </button>
                         </div>
                     </form>
+                    
+                    <!-- 📢 升級：數辦推廣自主增能研習專區 -->
+                    <div class="bg-gradient-to-br from-yunlin-50 to-white rounded-2xl p-6 shadow-sm border border-yunlin-100 text-left space-y-4">
+                        <div class="flex items-center gap-2.5 border-b pb-3 border-yunlin-200">
+                            <span class="bg-yunlin-600 text-white p-2 rounded-lg"><i class="fa-solid fa-graduation-cap"></i></span>
+                            <div>
+                                <h3 class="font-bold text-slate-800 text-base">📚 雲林數位學習推辦：教師自主精進研習專區 (維度對應)</h3>
+                                <p class="text-xs text-slate-500 mt-0.5">針對檢核維度 A、B、C、D 所規劃之精進增能受訓管道，提供教師自主學習與專業成長。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- 研習 A -->
+                            <div class="bg-white p-4 rounded-xl border border-slate-100 hover:shadow-md transition duration-200 flex flex-col justify-between">
+                                <div class="space-y-1.5">
+                                    <div class="flex justify-between items-center">
+                                        <span class="bg-teal-50 text-teal-700 border border-teal-200 text-[10px] font-bold px-2 py-0.5 rounded">對應維度 A 大屏操作</span>
+                                        <span class="text-[10px] text-slate-400 font-mono">課程代碼：4890251</span>
+                                    </div>
+                                    <h4 class="text-sm font-bold text-slate-800">智慧黑板基礎操作與無線鏡射連線除錯實務班</h4>
+                                    <p class="text-xs text-slate-500 leading-relaxed">針對 Apple TV、AVACAST 的連線參數優化，以及校內 Wi-Fi 訊號異常時大屏的基礎除錯和故障診斷實作教學。</p>
+                                </div>
+                                <div class="pt-3 flex justify-between items-center border-t border-slate-50 mt-3">
+                                    <span class="text-[11px] text-teal-600 font-bold">115學年度熱烈招生中</span>
+                                    <a href="https://www4.inservice.edu.tw/" target="_blank" class="text-xs bg-teal-600 hover:bg-teal-700 text-white font-bold px-3 py-1 rounded transition flex items-center gap-1">
+                                        點此報名 <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- 研習 B -->
+                            <div class="bg-white p-4 rounded-xl border border-slate-100 hover:shadow-md transition duration-200 flex flex-col justify-between">
+                                <div class="space-y-1.5">
+                                    <div class="flex justify-between items-center">
+                                        <span class="bg-indigo-50 text-indigo-700 border border-indigo-200 text-[10px] font-bold px-2 py-0.5 rounded">對應維度 B 雙屏協作</span>
+                                        <span class="text-[10px] text-slate-400 font-mono">課程代碼：4890252</span>
+                                    </div>
+                                    <h4 class="text-sm font-bold text-slate-800">大屏引導×小屏操作：雙屏協作課堂四學實踐坊</h4>
+                                    <p class="text-xs text-slate-500 leading-relaxed">以學生 iPad「自主、小組共學」解題為主體，傳授大屏引導導學、組間發表互評與講評的四學課堂設計模式。</p>
+                                </div>
+                                <div class="pt-3 flex justify-between items-center border-t border-slate-50 mt-3">
+                                    <span class="text-[11px] text-indigo-600 font-bold">115學年度熱烈招生中</span>
+                                    <a href="https://www4.inservice.edu.tw/" target="_blank" class="text-xs bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-3 py-1 rounded transition flex items-center gap-1">
+                                        點此報名 <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- 研習 C -->
+                            <div class="bg-white p-4 rounded-xl border border-slate-100 hover:shadow-md transition duration-200 flex flex-col justify-between">
+                                <div class="space-y-1.5">
+                                    <div class="flex justify-between items-center">
+                                        <span class="bg-amber-50 text-amber-700 border border-amber-200 text-[10px] font-bold px-2 py-0.5 rounded">對應維度 C 縣購軟體</span>
+                                        <span class="text-[10px] text-slate-400 font-mono">課程代碼：4890253</span>
+                                    </div>
+                                    <h4 class="text-sm font-bold text-slate-800">雲林縣購 SmartLumio 與酷AI 課堂深度融合應用班</h4>
+                                    <p class="text-xs text-slate-500 leading-relaxed">手把手操作 LoiloNote、SmartLumio 與雲林最新「酷AI」平台的指派任務、課堂即時反饋、適性診斷與學力分析實戰。</p>
+                                </div>
+                                <div class="pt-3 flex justify-between items-center border-t border-slate-50 mt-3">
+                                    <span class="text-[11px] text-amber-600 font-bold">115學年度熱烈招生中</span>
+                                    <a href="https://www.youtube.com/@yl-digital" target="_blank" class="text-xs bg-amber-500 hover:bg-amber-600 text-white font-bold px-3 py-1 rounded transition flex items-center gap-1">
+                                        數辦影音 <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- 研習 D -->
+                            <div class="bg-white p-4 rounded-xl border border-slate-100 hover:shadow-md transition duration-200 flex flex-col justify-between">
+                                <div class="space-y-1.5">
+                                    <div class="flex justify-between items-center">
+                                        <span class="bg-rose-50 text-rose-700 border border-rose-200 text-[10px] font-bold px-2 py-0.5 rounded">對應維度 D AIPACK</span>
+                                        <span class="text-[10px] text-slate-400 font-mono">課程代碼：4890254</span>
+                                    </div>
+                                    <h4 class="text-sm font-bold text-slate-800">AIPACK 生成式 AI 備課與 e度 自學倫理工作坊</h4>
+                                    <p class="text-xs text-slate-500 leading-relaxed">學習撰寫優秀 Prompt 來快速設計學習單與教材，引導學生使用 e度 進行思辨，並落實事實查核與數位倫理教育。</p>
+                                </div>
+                                <div class="pt-3 flex justify-between items-center border-t border-slate-50 mt-3">
+                                    <span class="text-[11px] text-rose-600 font-bold">115學年度熱烈招生中</span>
+                                    <a href="https://www4.inservice.edu.tw/" target="_blank" class="text-xs bg-rose-500 hover:bg-rose-600 text-white font-bold px-3 py-1 rounded transition flex items-center gap-1">
+                                        點此報名 <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- 右側：即時評估數據面板（側邊固定） -->
@@ -1080,8 +1154,9 @@
         let firebaseUnsubscribe = null;
         let appId = 'yunlin-digital-eval';
 
+        // 📢 A4 移除後，維度 A 改為 5 項指標：A1, A2, A3, A4, A5
         const metrics = {
-            A: ['A1', 'A2', 'A3', 'A4', 'A5', 'A6'],
+            A: ['A1', 'A2', 'A3', 'A4', 'A5'],
             B: ['B1', 'B2', 'B3', 'B4', 'B5'],
             C: ['C1', 'C2', 'C3', 'C4'],
             D: ['D1', 'D2', 'D3']
@@ -1098,6 +1173,7 @@
             loadLocalRecords();
             updateLiveAnalysis();
             updateRoleUI();
+            toggleTeacherIdRequired(); // 初始化動態防呆
         };
 
         function populateSchoolSelects() {
@@ -1137,6 +1213,23 @@
             } else {
                 schoolField.classList.add('hidden');
                 pwdHint.innerText = "※ 請輸入縣市總管理者通行密碼（056341014）。";
+            }
+        };
+
+        // 📢 升級：教師自評表時必填身分識別碼 (動態防呆)
+        window.toggleTeacherIdRequired = function() {
+            const evalType = document.querySelector('select[name="evalType"]').value;
+            const idInput = document.getElementById('teacherIdLast4-input');
+            const asterisk = document.getElementById('id-required-asterisk');
+            
+            if (evalType === '教師自我評量') {
+                idInput.required = true;
+                idInput.placeholder = "自評必填 (請輸入 4 位數字)";
+                if (asterisk) asterisk.classList.remove('hidden');
+            } else {
+                idInput.required = false;
+                idInput.placeholder = "請輸入 4 位數字 (選填)";
+                if (asterisk) asterisk.classList.add('hidden');
             }
         };
 
@@ -1236,7 +1329,7 @@
                 });
 
                 if (lowestVal === 0) {
-                    tipEl.innerText = `「正在進行統計評估，填寫完畢將自動產出數位精進建議。」`;
+                    tipEl.innerText = `「請選擇學校並開始評分。填寫完畢後，系統會自動產出數位精進建議。」`;
                 } else if (lowestDim === 'A') {
                     tipEl.innerText = `【大屏精進建議】受評教師在智慧黑板（大屏）硬體訊號切換與連線設定上平均分較低。建議對接資訊組網管老師，進行 1:1 Apple TV 及 AVACAST 基礎設定指導。`;
                 } else if (lowestDim === 'B') {
@@ -1452,6 +1545,15 @@
 
             const fd = new FormData(event.target);
             
+            // 📢 欄位安全檢查：如果評估類型為「自評」，必須強制填寫身分識別碼
+            const evalType = fd.get('evalType');
+            const teacherIdVal = fd.get('teacherIdLast4').trim();
+            if (evalType === '教師自我評量' && (!teacherIdVal || teacherIdVal.length !== 4 || isNaN(teacherIdVal))) {
+                showModal("防呆提示", "當選擇【教師自我評量】時，身分識別碼 (身分證後四碼) 為必填，請輸入 4 位數字！", "warning");
+                document.getElementById('teacherIdLast4-input').focus();
+                return;
+            }
+
             const evidenceData = {};
             ['C1', 'C2', 'C3', 'C4'].forEach(cid => {
                 const checked = Array.from(document.querySelectorAll(`input[name="${cid}_evidence"]:checked`)).map(cb => cb.value);
@@ -1464,21 +1566,21 @@
 
             const supportPlans = Array.from(document.querySelectorAll('input[name="supportPlan"]:checked')).map(cb => cb.value);
 
+            // 取得對應學校代碼
             const currentSchName = fd.get('schoolName');
             const targetSchool = SCHOOLS_DATA.find(s => s.name === currentSchName);
             const currentSchCode = targetSchool ? targetSchool.code : "";
 
             const record = {
                 id: 'local-' + Date.now() + '-' + Math.random().toString(36).substring(2, 9),
-                evalType: fd.get('evalType'),
+                evalType: evalType,
                 schoolName: currentSchName,
                 schoolCode: currentSchCode,
                 teacherName: fd.get('teacherName').trim(),
                 subject: fd.get('subject').trim(),
                 teacherStatus: fd.get('teacherStatus'),
                 isTransferred: fd.get('isTransferred'),
-                teacherIdLast4: fd.get('teacherIdLast4').trim(),
-                contactPhone: fd.get('contactPhone').trim(),
+                teacherIdLast4: teacherIdVal,
                 evaluatorName: fd.get('evaluatorName').trim(),
                 evalDate: fd.get('evalDate'),
                 scores: { ...scoreValues },
@@ -1538,6 +1640,7 @@
             });
 
             updateLiveAnalysis();
+            toggleTeacherIdRequired(); // 防呆連動重設
         };
 
         window.renderDashboard = function() {
@@ -1589,14 +1692,12 @@
                     const tId = (item.teacherIdLast4 || '').toLowerCase();
                     const eName = (item.evaluatorName || '').toLowerCase();
                     const sName = (item.schoolName || '').toLowerCase();
-                    const tPhone = (item.contactPhone || '').toLowerCase();
                     
                     if (!tName.includes(searchKeyword) && 
                         !tSub.includes(searchKeyword) && 
                         !tId.includes(searchKeyword) && 
                         !eName.includes(searchKeyword) &&
-                        !sName.includes(searchKeyword) &&
-                        !tPhone.includes(searchKeyword)) {
+                        !sName.includes(searchKeyword)) {
                         return false;
                     }
                 }
@@ -1719,6 +1820,145 @@
             tableBody.innerHTML = html;
         };
 
+        window.exportToCSV = function() {
+            const adminRole = sessionStorage.getItem('adminRole') || 'none';
+            const authorizedSchool = sessionStorage.getItem('authorizedSchool') || '';
+            const filterSchoolVal = document.getElementById('filter-school').value;
+            const filterStatusVal = document.getElementById('filter-status').value;
+            const searchKeyword = document.getElementById('search-keyword').value.trim().toLowerCase();
+
+            let exportData = [...evaluations];
+            if (adminRole === 'school') {
+                exportData = evaluations.filter(item => item.schoolName === authorizedSchool);
+            } else if (adminRole === 'county' && filterSchoolVal !== 'all') {
+                exportData = evaluations.filter(item => item.schoolName === filterSchoolVal);
+            }
+
+            exportData = exportData.filter(item => {
+                if (filterStatusVal !== 'all' && item.teacherStatus !== filterStatusVal) return false;
+                if (searchKeyword !== '') {
+                    const tName = (item.teacherName || '').toLowerCase();
+                    const tSub = (item.subject || '').toLowerCase();
+                    const tId = (item.teacherIdLast4 || '').toLowerCase();
+                    const eName = (item.evaluatorName || '').toLowerCase();
+                    const sName = (item.schoolName || '').toLowerCase();
+                    if (!tName.includes(searchKeyword) && !tSub.includes(searchKeyword) && !tId.includes(searchKeyword) && !eName.includes(searchKeyword) && !sName.includes(searchKeyword)) {
+                        return false;
+                    }
+                }
+                return true;
+            });
+
+            if (exportData.length === 0) {
+                showModal("無數據", "目前無任何紀錄符合匯出條件。", "warning");
+                return;
+            }
+
+            let csvContent = "\ufeff填報日期, 評估類型, 學校代碼, 學校名稱, 受評教師, 教師身分, 追蹤識別碼(後四碼), 新進/調任標記, 授課領域, 評估人員, 維度A平均, 維度B平均, 維度C平均, 維度D平均, C1適性診斷佐證軟體, C2課堂互動佐證軟體, C3遊戲化自主學習佐證軟體, C4學力檢測補救佐證軟體, 數位教學主要亮點, 待優化或需精進指引\n";
+
+            exportData.forEach(item => {
+                const dimScores = item.scores || {};
+                const dimA = (metrics.A.reduce((s, id) => s + Number(dimScores[id] || 0), 0) / metrics.A.length).toFixed(1);
+                const dimB = (['B1', 'B2', 'B3', 'B4', 'B5'].reduce((s, id) => s + Number(dimScores[id] || 0), 0) / 5).toFixed(1);
+                const dimC = (['C1', 'C2', 'C3', 'C4'].reduce((s, id) => s + Number(dimScores[id] || 0), 0) / 4).toFixed(1);
+                const dimD = (['D1', 'D2', 'D3'].reduce((s, id) => s + Number(dimScores[id] || 0), 0) / 3).toFixed(1);
+
+                const evC1 = (item.evidence && item.evidence.C1 ? item.evidence.C1.join('; ') : '').trim();
+                const evC2 = (item.evidence && item.evidence.C2 ? item.evidence.C2.join('; ') : '').trim();
+                const evC3 = (item.evidence && item.evidence.C3 ? item.evidence.C3.join('; ') : '').trim();
+                const evC4 = (item.evidence && item.evidence.C4 ? item.evidence.C4.join('; ') : '').trim();
+
+                const hg = (item.highlights || '').replace(/[\n\r,]/g, ' ');
+                const im = (item.improvements || '').replace(/[\n\r,]/g, ' ');
+
+                csvContent += `"${item.evalDate}"," ${item.evalType} "," ${item.schoolCode || ''} "," ${item.schoolName} "," ${item.teacherName} "," ${item.teacherStatus} "," ${item.teacherIdLast4 || ''} "," ${item.isTransferred || '否'} "," ${item.subject} "," ${item.evaluatorName} ", ${dimA}, ${dimB}, ${dimC}, ${dimD}, " ${evC1} ", " ${evC2} ", " ${evC3} ", " ${evC4} ", " ${hg} ", " ${im} "\n`;
+            });
+
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            const roleFilenamePrefix = adminRole === 'school' ? `${authorizedSchool}_` : '雲林縣全區_';
+            link.setAttribute("href", url);
+            link.setAttribute("download", `${roleFilenamePrefix}數位學習能力評估報表_${new Date().toLocaleDateString().replace(/\//g, '-')}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        };
+
+        window.showDetailReport = function(id) {
+            const item = evaluations.find(e => e.id === id);
+            if (!item) return;
+
+            const allEvidence = Object.values(item.evidence || {}).flat().filter(Boolean).join('、 ') || '無';
+            const support = item.supportPlans?.join('<br>• ') || '無特別安排';
+            
+            const dimScores = item.scores || {};
+            const avgA = (metrics.A.reduce((s, kid) => s + Number(dimScores[kid] || 0), 0) / metrics.A.length).toFixed(1);
+            const avgB = (['B1', 'B2', 'B3', 'B4', 'B5'].reduce((s, kid) => s + Number(dimScores[kid] || 0), 0) / 5).toFixed(1);
+            const avgC = (['C1', 'C2', 'C3', 'C4'].reduce((s, kid) => s + Number(dimScores[kid] || 0), 0) / 4).toFixed(1);
+            const avgD = (['D1', 'D2', 'D3'].reduce((s, kid) => s + Number(dimScores[kid] || 0), 0) / 3).toFixed(1);
+
+            const reportHtml = `
+                <div class="space-y-4 max-h-[60vh] overflow-y-auto pr-2 text-slate-700 text-xs sm:text-sm text-left">
+                    <div class="grid grid-cols-2 gap-2 bg-slate-50 p-3 rounded-lg border">
+                        <div><strong>受評教師：</strong> ${item.teacherName}</div>
+                        <div><strong>學校單位：</strong> ${item.schoolName} (代碼: ${item.schoolCode || '無'})</div>
+                        <div><strong>學科領域：</strong> ${item.subject}</div>
+                        <div><strong>教師編制：</strong> ${item.teacherStatus} (${item.isTransferred || '否'})</div>
+                        <div><strong>識別追蹤碼：</strong> ${item.teacherIdLast4 || '無'}</div>
+                        <div><strong>評估人員：</strong> ${item.evaluatorName}</div>
+                        <div class="col-span-2"><strong>填報日期：</strong> ${item.evalDate}</div>
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <h4 class="font-bold text-yunlin-700 border-b pb-1">各維度平均成效</h4>
+                        <div class="grid grid-cols-2 gap-3 text-center">
+                            <div class="p-2 bg-slate-50 rounded">
+                                <p class="text-[10px] text-slate-500">A. 大屏操作與管理</p>
+                                <p class="text-base font-bold text-teal-600">${avgA} / 5.0</p>
+                            </div>
+                            <div class="p-2 bg-slate-50 rounded">
+                                <p class="text-[10px] text-slate-500">B. 雙屏協作與四學</p>
+                                <p class="text-base font-bold text-indigo-600">${avgB} / 5.0</p>
+                            </div>
+                            <div class="p-2 bg-slate-50 rounded">
+                                <p class="text-[10px] text-slate-500">C. 縣購與教學平台</p>
+                                <p class="text-base font-bold text-amber-600">${avgC} / 5.0</p>
+                            </div>
+                            <div class="p-2 bg-slate-50 rounded">
+                                <p class="text-[10px] text-slate-500">D. AI 融入與 AIPACK</p>
+                                <p class="text-base font-bold text-rose-600">${avgD} / 5.0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-1">
+                        <h4 class="font-bold text-slate-800">使用與佐證教學軟體</h4>
+                        <p class="text-xs bg-slate-50 p-2 rounded border">${allEvidence}</p>
+                    </div>
+
+                    <div class="space-y-1">
+                        <h4 class="font-bold text-slate-800">1. 受評教師數位教學之亮點：</h4>
+                        <p class="text-xs bg-slate-50 p-2 rounded border whitespace-pre-line italic">${item.highlights || '無詳細說明'}</p>
+                    </div>
+
+                    <div class="space-y-1">
+                        <h4 class="font-bold text-slate-800">🌱 2. 教學共備與自主精進探索契機（溫馨成長建議）：</h4>
+                        <p class="text-xs bg-slate-50 p-2 rounded border whitespace-pre-line italic">${item.improvements || '無詳細說明'}</p>
+                    </div>
+
+                    <div class="space-y-1">
+                        <h4 class="font-bold text-slate-800">3. 校內支持與增能計畫配套：</h4>
+                        <div class="text-xs bg-teal-50/50 p-3 rounded border border-teal-100 text-teal-900 leading-relaxed">
+                            • ${support}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            showModal(`${item.teacherName} 老師數位學習融入評鑑報告`, reportHtml, "report");
+        };
+
         window.triggerDeleteRecord = async function(id) {
             const confirmed = await showConfirm(
                 "刪除評估紀錄", 
@@ -1755,148 +1995,6 @@
             }
         };
 
-        window.exportToCSV = function() {
-            const adminRole = sessionStorage.getItem('adminRole') || 'none';
-            const authorizedSchool = sessionStorage.getItem('authorizedSchool') || '';
-            const filterSchoolVal = document.getElementById('filter-school').value;
-            const filterStatusVal = document.getElementById('filter-status').value;
-            const searchKeyword = document.getElementById('search-keyword').value.trim().toLowerCase();
-
-            let exportData = [...evaluations];
-            if (adminRole === 'school') {
-                exportData = evaluations.filter(item => item.schoolName === authorizedSchool);
-            } else if (adminRole === 'county' && filterSchoolVal !== 'all') {
-                exportData = evaluations.filter(item => item.schoolName === filterSchoolVal);
-            }
-
-            exportData = exportData.filter(item => {
-                if (filterStatusVal !== 'all' && item.teacherStatus !== filterStatusVal) return false;
-                if (searchKeyword !== '') {
-                    const tName = (item.teacherName || '').toLowerCase();
-                    const tSub = (item.subject || '').toLowerCase();
-                    const tId = (item.teacherIdLast4 || '').toLowerCase();
-                    const eName = (item.evaluatorName || '').toLowerCase();
-                    const sName = (item.schoolName || '').toLowerCase();
-                    const tPhone = (item.contactPhone || '').toLowerCase();
-                    if (!tName.includes(searchKeyword) && !tSub.includes(searchKeyword) && !tId.includes(searchKeyword) && !eName.includes(searchKeyword) && !sName.includes(searchKeyword) && !tPhone.includes(searchKeyword)) {
-                        return false;
-                    }
-                }
-                return true;
-            });
-
-            if (exportData.length === 0) {
-                showModal("無數據", "目前無任何紀錄符合匯出條件。", "warning");
-                return;
-            }
-
-            // 📢 欄位完美分拆升級：將 C1~C4 佐證軟體拆分為 4 個獨立欄位，並加上寬字距留白
-            let csvContent = "\ufeff填報日期, 評估類型, 學校代碼, 學校名稱, 受評教師, 教師身分, 追蹤識別碼(後四碼), 聯絡電話, 新進/調任標記, 授課領域, 評估人員, 維度A平均, 維度B平均, 維度C平均, 維度D平均, C1適性診斷佐證軟體, C2課堂互動佐證軟體, C3遊戲化自主學習佐證軟體, C4學力檢測補救佐證軟體, 數位教學主要亮點, 待優化或需精進指引\n";
-
-            exportData.forEach(item => {
-                const dimScores = item.scores || {};
-                const dimA = (['A1', 'A2', 'A3', 'A4', 'A5', 'A6'].reduce((s, id) => s + Number(dimScores[id] || 0), 0) / 6).toFixed(1);
-                const dimB = (['B1', 'B2', 'B3', 'B4', 'B5'].reduce((s, id) => s + Number(dimScores[id] || 0), 0) / 5).toFixed(1);
-                const dimC = (['C1', 'C2', 'C3', 'C4'].reduce((s, id) => s + Number(dimScores[id] || 0), 0) / 4).toFixed(1);
-                const dimD = (['D1', 'D2', 'D3'].reduce((s, id) => s + Number(dimScores[id] || 0), 0) / 3).toFixed(1);
-
-                const evC1 = (item.evidence && item.evidence.C1 ? item.evidence.C1.join('; ') : '').trim();
-                const evC2 = (item.evidence && item.evidence.C2 ? item.evidence.C2.join('; ') : '').trim();
-                const evC3 = (item.evidence && item.evidence.C3 ? item.evidence.C3.join('; ') : '').trim();
-                const evC4 = (item.evidence && item.evidence.C4 ? item.evidence.C4.join('; ') : '').trim();
-
-                const hg = (item.highlights || '').replace(/[\n\r,]/g, ' ');
-                const im = (item.improvements || '').replace(/[\n\r,]/g, ' ');
-
-                csvContent += `"${item.evalDate}"," ${item.evalType} "," ${item.schoolCode || ''} "," ${item.schoolName} "," ${item.teacherName} "," ${item.teacherStatus} "," ${item.teacherIdLast4 || ''} "," ${item.contactPhone || ''} "," ${item.isTransferred || '否'} "," ${item.subject} "," ${item.evaluatorName} ", ${dimA}, ${dimB}, ${dimC}, ${dimD}, " ${evC1} ", " ${evC2} ", " ${evC3} ", " ${evC4} ", " ${hg} ", " ${im} "\n`;
-            });
-
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement("a");
-            const roleFilenamePrefix = adminRole === 'school' ? `${authorizedSchool}_` : '雲林縣全區_';
-            link.setAttribute("href", url);
-            link.setAttribute("download", `${roleFilenamePrefix}數位學習能力評估報表_${new Date().toLocaleDateString().replace(/\//g, '-')}.csv`);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        };
-
-        window.showDetailReport = function(id) {
-            const item = evaluations.find(e => e.id === id);
-            if (!item) return;
-
-            const allEvidence = Object.values(item.evidence || {}).flat().filter(Boolean).join('、 ') || '無';
-            const support = item.supportPlans?.join('<br>• ') || '無特別安排';
-            
-            const dimScores = item.scores || {};
-            const avgA = (['A1', 'A2', 'A3', 'A4', 'A5', 'A6'].reduce((s, kid) => s + Number(dimScores[kid] || 0), 0) / 6).toFixed(1);
-            const avgB = (['B1', 'B2', 'B3', 'B4', 'B5'].reduce((s, kid) => s + Number(dimScores[kid] || 0), 0) / 5).toFixed(1);
-            const avgC = (['C1', 'C2', 'C3', 'C4'].reduce((s, kid) => s + Number(dimScores[kid] || 0), 0) / 4).toFixed(1);
-            const avgD = (['D1', 'D2', 'D3'].reduce((s, kid) => s + Number(dimScores[kid] || 0), 0) / 3).toFixed(1);
-
-            const reportHtml = `
-                <div class="space-y-4 max-h-[60vh] overflow-y-auto pr-2 text-slate-700 text-xs sm:text-sm text-left">
-                    <div class="grid grid-cols-2 gap-2 bg-slate-50 p-3 rounded-lg border">
-                        <div><strong>受評教師：</strong> ${item.teacherName}</div>
-                        <div><strong>學校單位：</strong> ${item.schoolName} (代碼: ${item.schoolCode || '無'})</div>
-                        <div><strong>學科領域：</strong> ${item.subject}</div>
-                        <div><strong>教師編制：</strong> ${item.teacherStatus} (${item.isTransferred || '否'})</div>
-                        <div><strong>識別追蹤碼：</strong> ${item.teacherIdLast4 || '無'}</div>
-                        <div><strong>聯絡方式：</strong> ${item.contactPhone || '無'}</div>
-                        <div><strong>評估人員：</strong> ${item.evaluatorName}</div>
-                        <div><strong>填報日期：</strong> ${item.evalDate}</div>
-                    </div>
-                    
-                    <div class="space-y-2">
-                        <h4 class="font-bold text-yunlin-700 border-b pb-1">各維度平均成效</h4>
-                        <div class="grid grid-cols-2 gap-3 text-center">
-                            <div class="p-2 bg-slate-50 rounded">
-                                <p class="text-[10px] text-slate-500">A. 大屏操作與管理</p>
-                                <p class="text-base font-bold text-teal-600">${avgA} / 5.0</p>
-                            </div>
-                            <div class="p-2 bg-slate-50 rounded">
-                                <p class="text-[10px] text-slate-500">B. 雙屏協作與四學</p>
-                                <p class="text-base font-bold text-indigo-600">${avgB} / 5.0</p>
-                            </div>
-                            <div class="p-2 bg-slate-50 rounded">
-                                <p class="text-[10px] text-slate-500">C. 縣購與教學平台</p>
-                                <p class="text-base font-bold text-amber-600">${avgC} / 5.0</p>
-                            </div>
-                            <div class="p-2 bg-slate-50 rounded">
-                                <p class="text-[10px] text-slate-500">D. AI 融入與 AIPACK</p>
-                                <p class="text-base font-bold text-rose-600">${avgD} / 5.0</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="space-y-1">
-                        <h4 class="font-bold text-slate-800">使用與佐證教學軟體</h4>
-                        <p class="text-xs bg-slate-50 p-2 rounded border">${allEvidence}</p>
-                    </div>
-
-                    <div class="space-y-1">
-                        <h4 class="font-bold text-slate-800">1. 受評教師數位教學之亮點：</h4>
-                        <p class="text-xs bg-slate-50 p-2 rounded border whitespace-pre-line italic">${item.highlights || '無詳細說明'}</p>
-                    </div>
-
-                    <div class="space-y-1">
-                        <h4 class="font-bold text-slate-800">2. 待優化 or 需進一步協助：</h4>
-                        <p class="text-xs bg-slate-50 p-2 rounded border whitespace-pre-line italic">${item.improvements || '無詳細說明'}</p>
-                    </div>
-
-                    <div class="space-y-1">
-                        <h4 class="font-bold text-slate-800">3. 校內支持與增能計畫配套：</h4>
-                        <div class="text-xs bg-teal-50/50 p-3 rounded border border-teal-100 text-teal-900 leading-relaxed">
-                            • ${support}
-                        </div>
-                    </div>
-                </div>
-            `;
-
-            showModal(`${item.teacherName} 老師數位學習融入評鑑報告`, reportHtml, "report");
-        };
-
         window.switchTab = function(tabId) {
             if (tabId === 'dashboard-tab') {
                 const isVerified = sessionStorage.getItem('isAdminVerified') === 'true';
@@ -1929,34 +2027,7 @@
             }
         }
 
-        function openAdminAuthModal() {
-            const modal = document.getElementById('admin-auth-modal');
-            document.getElementById('admin-password-input').value = '';
-            document.getElementById('admin-auth-error').classList.add('hidden');
-            modal.classList.remove('hidden');
-            toggleLoginFields();
-            setTimeout(() => {
-                modal.opacity = "1";
-                modal.classList.remove('hidden');
-                modal.classList.add('opacity-100');
-                modal.firstElementChild.classList.remove('scale-95');
-                modal.firstElementChild.classList.add('scale-100');
-                document.getElementById('admin-password-input').focus();
-            }, 50);
-        }
-
-        window.closeAdminAuthModal = function() {
-            const modal = document.getElementById('admin-auth-modal');
-            modal.classList.remove('opacity-100');
-            modal.firstElementChild.classList.remove('scale-100');
-            modal.firstElementChild.classList.add('scale-95');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-            }, 300);
-            pendingAction = null;
-        };
-
-        window.verifyAdminPassword = function() {
+        function verifyAdminPassword() {
             const role = document.getElementById('login-role').value;
             const inputVal = document.getElementById('admin-password-input').value.trim();
             const schoolNameInput = document.getElementById('login-school-name').value;
@@ -2010,7 +2081,7 @@
                     errorText.classList.remove('hidden');
                 }
             }
-        };
+        }
 
         function updateRoleUI() {
             const badge = document.getElementById('role-status-badge');
@@ -2122,8 +2193,11 @@
                 confirmActionResolver = null;
             }
         };
+
+        // 綁定全域函式確保在 HTML 內 onclick 可以正常呼叫
+        window.toggleTeacherIdRequired = toggleTeacherIdRequired;
+        window.verifyAdminPassword = verifyAdminPassword;
     </script>
 
 </body>
 </html>
-``` Survivable Firebase integration setup correctly in current file.
