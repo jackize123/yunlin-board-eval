@@ -2031,6 +2031,37 @@
             }
         }
 
+        // 🔒 補回的核心控制：開啟管理者驗證彈窗
+        function openAdminAuthModal() {
+            const modal = document.getElementById('admin-auth-modal');
+            if (modal) {
+                document.getElementById('admin-password-input').value = '';
+                document.getElementById('admin-auth-error').classList.add('hidden');
+                modal.classList.remove('hidden');
+                toggleLoginFields(); // 確保下拉選單與欄位狀態同步
+                setTimeout(() => {
+                    modal.classList.add('opacity-100');
+                    modal.firstElementChild.classList.remove('scale-95');
+                    modal.firstElementChild.classList.add('scale-100');
+                    document.getElementById('admin-password-input').focus();
+                }, 50);
+            }
+        }
+
+        // 🔒 補回的核心控制：關閉管理者驗證彈窗
+        function closeAdminAuthModal() {
+            const modal = document.getElementById('admin-auth-modal');
+            if (modal) {
+                modal.classList.remove('opacity-100');
+                modal.firstElementChild.classList.remove('scale-100');
+                modal.firstElementChild.classList.add('scale-95');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300);
+            }
+            pendingAction = null;
+        }
+
         function verifyAdminPassword() {
             const role = document.getElementById('login-role').value;
             const inputVal = document.getElementById('admin-password-input').value.trim();
@@ -2202,6 +2233,8 @@
         window.toggleTeacherIdRequired = toggleTeacherIdRequired;
         window.toggleLoginFields = toggleLoginFields;
         window.verifyAdminPassword = verifyAdminPassword;
+        window.openAdminAuthModal = openAdminAuthModal;
+        window.closeAdminAuthModal = closeAdminAuthModal;
     </script>
 
 </body>
